@@ -13,6 +13,20 @@
 		<img src="./image1.png" alt="An image showing various colored triangles, with notable jaggies shown in the top-right.">
 		<br/>
 		<h2>Problem 2</h2>
+		<p>To supersample, I use the same three-line test from Problem 1, but this time split each pixel at decimal increments.
+		I updated the sample array to contain <code>sample_rate</code> times as many elements, with the element at 
+		position <code>sample_rate * (y * width + x) + sub</code> corresponding to subsample number <code>sub</code> at a
+		given pixel. Then, when rendering, I iterate through the sample buffer and average the subsamples to create each
+		pixel.</p>
+		<p>Subsampling is useful because it allows for non-binary detail, which reduces jaggies and therefore improves
+		overall visual quality. The supersampling method I implemented allows for points near the edge of an object to
+		express more detail, which comes across to the eye as almost "sub-pixel" quality without needing more pixels.</p>
+		<p>This naturally required updating every change to and access of the sample buffer with this new subdivided
+		coordinate system, including changes to <code>fill_pixel</code>, <code>rasterize_triangle</code>, 
+		<code>set_sample_rate</code>, and <code>set_framebuffer_target</code>.</p>
+		<img src="./image21.png" alt="Sampling rate of 1.">
+		<img src="./image22.png" alt="Sampling rate of 4.">
+		<img src="./image23.png" alt="Sampling rate of 16.">
 		<br/>
 		<h2>Problem 3</h2>
 		<br/>
