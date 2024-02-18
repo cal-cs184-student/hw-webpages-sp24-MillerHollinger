@@ -24,9 +24,13 @@
 		<p>This naturally required updating every change to and access of the sample buffer with this new subdivided
 		coordinate system, including changes to <code>fill_pixel</code>, <code>rasterize_triangle</code>, 
 		<code>set_sample_rate</code>, and <code>set_framebuffer_target</code>.</p>
-		<p>A sampling rate of 1 below. Notice the serious jaggies on the green triangle's thin point.</p>
+		<p>The images below show the practical effect of supersampling on a sharp corner.</p>
+		<p>A sampling rate of 1 below. Notice the serious jaggies on the green triangle's thin point. This occurs
+		because the point defining the triangle's vertex is just short of touching the pixel, leaving the point
+		in an unnatural shape.</p>
 		<img src="./image21.png" alt="Sampling rate of 1.">
-		<p>A sampling rate of 4 below. The point is better now, though the top of the triangle is still bumpy.</p>
+		<p>A sampling rate of 4 below. The point is better now, having a few lighter-colored pixels to
+		make the transition from white to green less jarring, though the top of the triangle is still bumpy.</p>
 		<img src="./image22.png" alt="Sampling rate of 4.">
 		<p>A sampling rate of 16 below. The top is now very smooth, as is the point and bottom edge.</p>
 		<img src="./image23.png" alt="Sampling rate of 16.">
