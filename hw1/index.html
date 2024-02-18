@@ -54,6 +54,24 @@
 		<image src="./image41.png" alt="A color wheel.">
 		<br/>
 		<h2>Problem 5</h2>
+		<p>Pixel sampling uses UV coordinates to map a location on a triangle into a location in an image. UV coordinates
+		map each triangle vertex to a location in the texture image. Then, when you then render the triangle with nearest filtering, it uses a barycentric interpolation
+		on the UV coordinates of the triangle's vertices to get more precise UV coordinates for that specific location. Then, it returns the color of the closest
+		pixel at that location in the texture image.</p>
+		<p>As an additional step in bilinear filtering, instead of merely returning the color of the nearest pixel to the calculated UV coordinate,
+		instead the four closest pixels are all checked. Their colors are interpolated between using ReLU, with the texture pixels closer
+		to the calculated UV having increased weight. This applies a smoothing effect that lessens sudden changes in color.</p>
+		<p>This is demonstrated by the four images below.</p>
+		<p>With no filtering, the windows of the Campanile are a jaggy mess, filled with black and brown spots.</p>
+		<img src="./image51.png" alt="Eww! The campanile with no filtering and no supersampling.">
+		<p>With filtering, the windows are easier to make out, with many of the dark spots gone</p>
+		<img src="./image51.png" alt="The campanile with filtering.">
+		<p>With no filtering but 16x supersampling, the quality increases, though so does the computation time.</p>
+		<img src="./image51.png" alt="The campanile with supersampling.">
+		<p>With filtering and 16x supersampling, the image is much easier to make out.</p>
+		<img src="./image51.png" alt="The campanile with filtering and supersampling.">
+		<p>In these example images, the largest improvement from filtering comes at low sampling rates, as it prevents a single dark-colored pixel from having an outsized effect on the final image. The averaging applied by the filtering smooths
+		the final image out and makes connected textures easier to make out. When already supersampled, however, this benefit is less noticable, as supersampling also has a smoothing effect.</p>
 		<br/>
 		<h2>Problem 6</h2>
 	</body>
