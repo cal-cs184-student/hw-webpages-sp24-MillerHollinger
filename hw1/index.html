@@ -74,5 +74,22 @@
 		the final image out and makes connected textures easier to make out. When already supersampled, however, this benefit is less noticable, as supersampling also has a smoothing effect.</p>
 		<br/>
 		<h2>Problem 6</h2>
+		<p>Level sampling takes pixel sampling a step further using mipmaps. Mipmaps are multiple quality levels of a specific texture, so that tris that don't need as complex a texture to look acceptable
+		can use less processing power. In this instance, each tri's UV distance over the texture image is measured, and then plugged into the formula from lecture 5. This returns a mipmap level to use to render that triangle.
+		</p>
+		<p>Pixel sampling is the least intensive, but as shown earlier, can have quality issues. A single dark pixel can, when sampled, dominate a space, creating muddy and jaggy images in some instances.</p>
+		<p>Level sampling requires more memory to save the mipmap, but prevents the need to use the full-quality image every time a triangle is rendered. This speeds up the rendering operation, but necessarily leads to a minor loss
+		in quality as the lower quality images lack equivalent detail. This can actually work in one's favor, however, as doing this compression may remove visual artifiacts.</p>
+		<p>Sampling multiple times per pixel, a.k.a. supersampling, is another way to remove artifacts and effectively smooth images. It has the benefit of reducing jaggies as well. 
+		However, it is very resource intensive, requiring essentially 4x as many operations be done in the same time for the
+		very lowest supersampling level, or exponentially more for higher levels.</p>
+		<p>A picture with <code>L_ZERO</code> and <code>P_NEAREST</code>.</p>
+		<img src="./image61.png" alt="The image.">
+		<p>A picture with <code>L_ZERO</code> and <code>P_LINEAR</code>.</p>
+		<img src="./image62.png" alt="The image.">
+		<p>A picture with <code>L_NEAREST</code> and <code>P_NEAREST</code>.</p>
+		<img src="./image63.png" alt="The image.">
+		<p>A picture with <code>L_NEAREST</code> and <code>P_LINEAR</code>.</p>
+		<img src="./image64.png" alt="The image.">
 	</body>
 </html>
