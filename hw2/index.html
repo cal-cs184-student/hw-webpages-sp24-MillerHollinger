@@ -76,5 +76,32 @@
 		<img src="./image43.png">
 		<p>It makes an interesting pattern!</p>
 		<img src="./image44.png">
+		<h2>Part 5</h2>
+		<p>
+			The main difference between the edge split operation and the edge flip operation was the need to create additional mesh elements and set their values.
+			Aside for that, it was essentially the same process as Part 4 — draw the input mesh, draw the output mesh, label each element, and meticulously set every element to its intended value.
+			For the vertex, I  got the midpoint of the constituent vertices by averaging their positions and set the new vertex's position to that.
+		</p>
+		<p>
+			Time for some edge splitting!
+		</p>
+		<img src="./image51.png">
+		<p>
+			Let's split it in some places...
+		</p>
+		<img src="./image52.png">
+		<p>
+			Flip some edges...
+		</p>
+		<img src="./image53.png">
+		<p>
+			And some more flips and splits for good measure.
+		</p>
+		<img src="./image54.png">
+		<p>
+			Debugging here was similar to Part 4, except that I realized I had to initialize the position of the new vertex — the first time I tried to split a vertex, it appeared at the default
+			position of (0, 0, 0), which was very confusing the first time it happened! I uncovered another issue when I pressed Q to switch to smoothed mode: I'd forgotten to set the value of my new
+			vertex's halfEdge(), so it segfaulted the program. Still, it was a quick and easy way to find out there was an issue!
+		</p>
 	</body>
 </html>
