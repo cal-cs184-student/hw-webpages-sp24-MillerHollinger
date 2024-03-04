@@ -55,5 +55,24 @@
 		<img src="./image31.png">
 		<p>The teapot looks smooth despite the low-poly underlying geometry.</p>
 		<img src="./image32.png">
+		<h2>Part 4</h2>
+		<p>
+			With operations such as flipping an edge, all that is really necessary is a clear idea of what the object will look like before and after the operation. I used the guide provided to us
+			at <a href="http://15462.courses.cs.cmu.edu/fall2015content/misc/HalfedgeEdgeOpImplementationGuide.pdf">http://15462.courses.cs.cmu.edu/fall2015content/misc/HalfedgeEdgeOpImplementationGuide.pdf</a>
+			to get a visual understanding of what would change (and what would stay the same) after executing the edge flip operation.
+		</p>
+		<p>
+			The main issue I had to debug revolved around the "outer neighbors," that is the outer half-edges, and ensuring their values were set properly. Debugging came down to simply going back
+			over the code I wrote with a fine-toothed comb and verifying each element was correct as shown on the chart. After doing so, I found and fixed the error, though it was truly like finding
+			a needle in a haystack.
+		</p>
+		<p>
+			Here's some edge flipping action:
+		</p>
+		<img src="./image41.png">
+		<p>After a few flips...</p>
+		<img src="./image42.png">
+		<p>And after a truly shocking number of flips.</p>
+		<img src="./image43.png">
 	</body>
 </html>
