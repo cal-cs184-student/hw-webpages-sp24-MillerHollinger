@@ -12,7 +12,7 @@
 		<p>
 			??? OVERVIEW GO HERE
 		</p>
-		<h2>Problem 1</h2>
+		<h2>Section 1 Part 1</h2>
 		<p>
 			De Casteljau's Algorithm is a surprisingly elegant algorithm used to create Bezier curves out of a set of control points connected by lines. The basic idea is that you reduce the set of control points down
 			to a set of intermediary points by connecting the midpoints of the lines between the control points. As there are X points and X-1 lines, you therefore end up with one fewer point in the
@@ -29,5 +29,18 @@
 		<p>The red point is the final calculated point, and is on the bezier curve. Repeating this process for values of t between 0 and 1 yields the entire curve.</p>
 		<p>See another example below with an altered t-value and control points.</p>
 		<img src="./image17.png">
+		<h2>Section 1 Part 2</h2>
+		<p>
+			When extended to 3D, de Casteljau's algorithm works by essentially creating an intermediate set of control points. Each row of control points is treated as an individual Bezier curve,
+			interpolated in three dimensions instead of two. The resulting point from that Bezier curve is then used as a control point, alongside the points created by each other row,
+			to create a column-wise Bezier curve. That curve is also interpolated across to find the location of the final point.
+		</p>
+		<p>
+			Another change when switching to 3D is that the "t" value is exchanged for two values, u and v. 
+			These indicate the ratio of the linear interpolation for the rows and columns respectively. They are each varied between 0 and 1 independently.
+			Having a separate u and v allows for a surface to be created instead of simply a line, as for each point defined by a given u value, a bezier curve can be created by varying the v value.
+			The same is true in reverse -- therefore, a 2D bezier surface might be thought of as an infinite number of bezier curves pressed against each other.
+		</p>
+		<img src="./image2.png">
 	</body>
 </html>
