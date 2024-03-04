@@ -7,14 +7,27 @@
 		</style>
 	</head>
 	<body>
-		<h1>Homework 2 @ <a href="">?</a></h1>
+		<h1>Homework 2 @ <a href="https://cal-cs184-student.github.io/hw-webpages-sp24-MillerHollinger/hw2/index.html">https://cal-cs184-student.github.io/hw-webpages-sp24-MillerHollinger/hw2/index.html</a></h1>
 		<h2>Overview</h2>
 		<p>
-			In this homework, I implemented a variety of image display and filtering functions, then tested them out on a number of images to see their effects.
+			??? OVERVIEW GO HERE
 		</p>
-		<i>
-			Grader's Note: No extra credit was attempted for all six problems -- I just did the basic requirements.
-		</i>
 		<h2>Problem 1</h2>
+		<p>
+			De Casteljau's Algorithm is a surprisingly elegant algorithm used to create Bezier curves out of a set of control points connected by lines. The basic idea is that you reduce the set of control points down
+			to a set of intermediary points by connecting the midpoints of the lines between the control points. As there are X points and X-1 lines, you therefore end up with one fewer point in the
+			intermediate set than you had in the control set. Repeating this process until only one point remains yields a point on the curve. To construct the whole curve, the midpoints are, instead of being precisely
+			in the center, are instead weighted towards one end or the other of the curve using a value, called t. Drawing every resulting point with a t-value from 0 to 1 yields a Bezier curve.
+		</p>
+		<p>Starting with the curve shown below, we can show this process for the t-value 0.5.</p>
+		<img src="./image11.png">
+		<img src="./image12.png">
+		<img src="./image13.png">
+		<img src="./image14.png">
+		<img src="./image15.png">
+		<img src="./image16.png">
+		<p>The red point is the final calculated point, and is on the bezier curve. Repeating this process for values of t between 0 and 1 yields the entire curve.</p>
+		<p>See another example below with an altered t-value and control points.</p>
+		<img src="./image17.png">
 	</body>
 </html>
