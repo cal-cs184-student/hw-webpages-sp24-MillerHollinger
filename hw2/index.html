@@ -12,7 +12,7 @@
 		<p>
 			??? OVERVIEW GO HERE
 		</p>
-		<h2>Section 1 Part 1</h2>
+		<h2>Part 1</h2>
 		<p>
 			De Casteljau's Algorithm is a surprisingly elegant algorithm used to create Bezier curves out of a set of control points connected by lines. The basic idea is that you reduce the set of control points down
 			to a set of intermediary points by connecting the midpoints of the lines between the control points. As there are X points and X-1 lines, you therefore end up with one fewer point in the
@@ -29,7 +29,7 @@
 		<p>The red point is the final calculated point, and is on the bezier curve. Repeating this process for values of t between 0 and 1 yields the entire curve.</p>
 		<p>See another example below with an altered t-value and control points.</p>
 		<img src="./image17.png">
-		<h2>Section 1 Part 2</h2>
+		<h2>Part 2</h2>
 		<p>
 			When extended to 3D, de Casteljau's algorithm works by essentially creating an intermediate set of control points. Each row of control points is treated as an individual Bezier curve,
 			interpolated in three dimensions instead of two. The resulting point from that Bezier curve is then used as a control point, alongside the points created by each other row,
@@ -42,5 +42,18 @@
 			The same is true in reverse -- therefore, a 2D bezier surface might be thought of as an infinite number of bezier curves pressed against each other.
 		</p>
 		<img src="./image2.png">
+		<h2>Part 3</h2>
+		<p>
+			To implement the area-weighted vertex normals, I first created a loop that iterates through each halfedge leading into a point in a similar fashion to the provided printNeighborPositions() function. 
+			At each step, two adjacent neighbors are found. By taking advantage of the half-edge system, these two neighbors are always the two neighbors which form a touching face.
+			Then, the normal of this face is calculated using the cross product.
+		</p>
+		<p>
+			At the end, each of these calculated normals is summed, then finally normalized to get the resulting normal of the vertex itself. The result is the ability to make very smooth-looking objects, like
+			the one shown below.
+		</p>
+		<img src="./image31.png">
+		<p>The teapot looks smooth despite the low-poly underlying geometry.</p>
+		<img src="./image32.png">
 	</body>
 </html>
