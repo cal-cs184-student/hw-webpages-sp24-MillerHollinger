@@ -105,5 +105,38 @@
 			position of (0, 0, 0), which was very confusing! I uncovered another issue when I pressed Q to switch to smoothed mode: I'd forgotten to set the value of my new
 			vertex's halfEdge(), so it segfaulted the program. Still, it was a quick and easy way to find out there was an issue!
 		</p>
+		<h2>Part 6</h2>
+		<p>
+			For loop subdivision, I followed the provided guide and made use of the isNew variable as well as the charts I'd drawn for my flip and split operations.
+			The main bug I encountered revolved around juggling the value of newPosition -- specifically, finding the correct place in the code to set it, and what exactly to set it to.
+			It was clear to me that was my main issue because vertices kept appearing at (0, 0, 0) instead of at their intended position. I then ran into issues with over-flipping edges,
+			which I resolved by changing the condition for when to flip an edge by trial-and-error. The correct implementation required me to keep in mind both the "color" of the edge as
+			shown in the spec and also what new vertices were a part of it.
+		</p>
+		<p>
+			Subdivision tends to have a smoothing effect on objects, which makes sense because each step conducts a weighted average on each point. Have a look at some examples:
+		</p>
+		<p>This pointy icosahedron smooths out nicely into a ball.</p>
+		<img src="./image61.png">
+		<img src="./image62.png">
+		<img src="./image63.png">
+		<p>The torus also smooths out nicely after a few iterations.</p>
+		<img src="./image64.png">
+		<img src="./image65.png">
+		<p>This bean, on the other hand, is already high-poly and barely changes shape.</p>
+		<img src="./image66.png">
+		<img src="./image67.png">
+		<p>Although the cube starts out symmetrical, a few subdivisions cause it to become asymmetrical, with opposite corners pulling together. 
+		This is because of the way we weight the positions of neighboring points when
+		subdividing: when placing a new vertex, the vertices touching an edge are weighted 3/8 each, while the other two face-adjacent vertices 
+		are only weighted 1/8. Therefore, the central diagonal pulls opposite corners closer together.</p>
+		<img src="./image68.png">
+		<img src="./image69.png">
+		<p>As the issue is an asymmetrical edge, the solution must be making the edges symmetrical. So, Tto prevent this, we can simply split each face once in advance to create a symmetrical "X" on each face:</p>
+		<img src="./image610.png">
+		<p>Now, the effect is balanced in all directions, creating a symmetrical pillow-like cube.</p>
+		<img src="./image611.png">
+		<img src="./image612.png">
+		<p>This concludes Homework 2.</p>
 	</body>
 </html>
