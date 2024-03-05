@@ -11,7 +11,7 @@
 		<h2>Overview</h2>
 		<p>
 			In this homework, two topics were explored: first, I used de Casteljau's algorithm to render bezier lines, and then transitioned that technique into 3D to render a bezier-defined 3D object.
-			Then, after implemented area-weighted vertex normals, I wrote a variety of common mesh manipulation functions.
+			Then, after I implemented area-weighted vertex normals, I wrote a variety of common mesh manipulation functions.
 		</p>
 		<i>Grader's Note: Tasks 1-6 completed. No extra credit attempted.</i>
 		<h2>Part 1</h2>
@@ -19,7 +19,7 @@
 			De Casteljau's Algorithm is a surprisingly elegant algorithm used to create Bezier curves out of a set of control points connected by lines. The basic idea is that you reduce the set of control points down
 			to a set of intermediary points by connecting the midpoints of the lines between the control points. As there are X points and X-1 lines, you therefore end up with one fewer point in the
 			intermediate set than you had in the control set. Repeating this process until only one point remains yields a point on the curve. To construct the whole curve, the midpoints are, instead of being precisely
-			in the center, are instead weighted towards one end or the other of the curve using a value, called t. Drawing every resulting point with a t-value from 0 to 1 yields a Bezier curve.
+			in the center, instead interpolated towards one end or the other of the curve using a value, called t. Drawing every resulting point using all t-values from 0 to 1 yields a Bezier curve.
 		</p>
 		<p>Starting with the curve shown below, we can show this process for the t-value 0.5.</p>
 		<img src="./image11.png">
@@ -33,7 +33,7 @@
 		<img src="./image17.png">
 		<h2>Part 2</h2>
 		<p>
-			When extended to 3D, de Casteljau's algorithm works by essentially creating an intermediate set of control points. Each row of control points is treated as an individual Bezier curve,
+			When extended to 3D, de Casteljau's algorithm works by creating a second intermediate set of control points. Each row of control points is treated as an individual Bezier curve,
 			interpolated in three dimensions instead of two. The resulting point from that Bezier curve is then used as a control point, alongside the points created by each other row,
 			to create a column-wise Bezier curve. That curve is also interpolated across to find the location of the final point.
 		</p>
@@ -41,13 +41,13 @@
 			Another change when switching to 3D is that the "t" value is exchanged for two values, u and v. 
 			These indicate the ratio of the linear interpolation for the rows and columns respectively. They are each varied between 0 and 1 independently.
 			Having a separate u and v allows for a surface to be created instead of simply a line, as for each point defined by a given u value, a bezier curve can be created by varying the v value.
-			The same is true in reverse -- therefore, a 2D bezier surface might be thought of as an infinite number of bezier curves pressed against each other.
+			The same is true in reverse -- therefore, a 2D Bezier surface might be thought of as an infinite number of Bezier curves pressed against each other.
 		</p>
 		<img src="./image2.png">
 		<h2>Part 3</h2>
 		<p>
 			To implement the area-weighted vertex normals, I first created a loop that iterates through each halfedge leading into a point in a similar fashion to the provided printNeighborPositions() function. 
-			At each step, two adjacent neighbors are found. By taking advantage of the half-edge system, these two neighbors are always the two neighbors which form a touching face.
+			At each step, two adjacent neighbors are found. These two neighbors are guaranteed to be two neighbors which form a face neighboring the third.
 			Then, the normal of this face is calculated using the cross product.
 		</p>
 		<p>
@@ -64,7 +64,7 @@
 			to get a visual understanding of what would change (and what would stay the same) after executing the edge flip operation.
 		</p>
 		<p>
-			The main issue I had to debug revolved around the "outer neighbors," that is the outer half-edges, and ensuring their values were set properly. Debugging came down to simply going back
+			The main issue I had to debug revolved around the outer neighbors, specifically the outer half-edges, and ensuring their values were set properly. Debugging came down to simply going back
 			over the code I wrote with a fine-toothed comb and verifying each element was correct as shown on the chart. After doing so, I found and fixed the error, though it was truly like finding
 			a needle in a haystack.
 		</p>
@@ -109,32 +109,39 @@
 		<p>
 			For loop subdivision, I followed the provided guide and made use of the isNew variable as well as the charts I'd drawn for my flip and split operations.
 			The main bug I encountered revolved around juggling the value of newPosition -- specifically, finding the correct place in the code to set it, and what exactly to set it to.
-			It was clear to me that was my main issue because vertices kept appearing at (0, 0, 0) instead of at their intended position. I then ran into issues with over-flipping edges,
-			which I resolved by changing the condition for when to flip an edge by trial-and-error. The correct implementation required me to keep in mind both the "color" of the edge as
-			shown in the spec and also what new vertices were a part of it.
+			It became clear there was a problem because vertices kept appearing at (0, 0, 0) instead of at their intended position. I also ran into issues with over-flipping edges,
+			which I resolved by changing the condition for when to flip an edge by trying several different conditions and checking the effect of each.
+			The correct implementation required me to keep in mind both if an edge were new or old and also if its vertices were new or old.
 		</p>
 		<p>
-			Subdivision tends to have a smoothing effect on objects, which makes sense because each step conducts a weighted average on each point. Have a look at some examples:
+			Subdivision tends to have a smoothing effect on objects, which makes sense because each step conducts a weighted average on each point. Additionally, it adds more
+			vertices, which reduces the number of flat surfaces. Let's look at some examples:
 		</p>
-		<p>This pointy icosahedron smooths out nicely into a ball.</p>
+		<p>This pointy icosahedron smooths out, gradually becoming a ball.</p>
 		<img src="./image61.png">
 		<img src="./image62.png">
 		<img src="./image63.png">
-		<p>The torus also smooths out nicely after a few iterations.</p>
+		<p>The torus also smooths out very well after a few iterations.</p>
 		<img src="./image64.png">
 		<img src="./image65.png">
-		<p>This bean, on the other hand, is already high-poly and barely changes shape.</p>
+		<p>This bean, on the other hand, is already high-poly and barely changes shape when subdivided.</p>
 		<img src="./image66.png">
 		<img src="./image67.png">
-		<p>Although the cube starts out symmetrical, a few subdivisions cause it to become asymmetrical, with opposite corners pulling together. 
-		This is because of the way we weight the positions of neighboring points when
-		subdividing: when placing a new vertex, the vertices touching an edge are weighted 3/8 each, while the other two face-adjacent vertices 
-		are only weighted 1/8. Therefore, the central diagonal pulls opposite corners closer together.</p>
+		<p>
+			Although the cube starts out symmetrical, a few subdivisions cause it to become asymmetrical, with opposite corners pulling together. 
+			This is because of the way we weight the positions of neighboring points when
+			subdividing: when placing a new vertex, the vertices touching an edge are weighted 3/8 each, while the other two face-adjacent vertices 
+			are only weighted 1/8. Therefore, the central diagonal edge pulls its two vertices closer together over time, while the other two move
+			less. This causes asymmetry.
+		</p>
 		<img src="./image68.png">
 		<img src="./image69.png">
-		<p>As the issue is an asymmetrical edge, the solution must be making the edges symmetrical. So, Tto prevent this, we can simply split each face once in advance to create a symmetrical "X" on each face:</p>
+		<p>
+			As the issue is an asymmetrical edge, the solution must be making edges symmetrical. So, to prevent this, we can simply split the six diagonal edges 
+			to create a symmetrical "X" on each face:
+		</p>
 		<img src="./image610.png">
-		<p>Now, the effect is balanced in all directions, creating a symmetrical pillow-like cube.</p>
+		<p>Now, the pulling effect is balanced in all directions, creating a symmetrical pillow-like cube after a few iterations.</p>
 		<img src="./image611.png">
 		<img src="./image612.png">
 		<p>This concludes Homework 2.</p>
