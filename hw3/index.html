@@ -15,6 +15,53 @@
 		<i>Grader's Note: NOTE HERE</i>
 		<h2>Part 1</h2>
 		<p>
-			ETC
+			The basic pipeline for Part 1 of this problem revolves around generating and checking the intersections of camera rays. 
 		</p>
+		<p>
+			The most basic task is converting between camera coordinates and world coordinates. By doing so, we are able to map locations 
+			on the image to virtual camera space, which makes raycasting in world-space able to draw onto the camera space.
+		</p>
+		<p>
+			Then, we write a sampler that allows us to estimate radiance by drawing rays. Specifically, we use Monte Carlo
+			randomly sampled estimates in order to approximate the lighting across the image. We then draw the calculated radiance
+			in each of R, G, B to the pixel buffer.
+		</p>
+		<p>
+			Finally, we are able to begin raycasting into tris and spheres. Raycasting works by emitting a large number of rays from the camera,
+			which fall on the scene and measure the scene's color at various points. The fundamental action, then, is figuring out where exactly each
+			ray falls on the scene so we know where to measure.
+		</p>
+		<p>
+			For triangles, I used the Moller-Trumbore algorithm to find the barycentric coordinates of, and distance to, the intersection between the
+			ray and each triangle's plane. The algorithm is simply an application of Cramer's Rule, and is a computationally faster way to solve the ray intersection equation 
+			<code>O+tD = (1-b1-b2)P0 + b1P1 + b2P2</code>
+			for the values of t, b1, and b2, which are the distance to intersection and two of its barycentric coordinates (the third coordinate may be extrapolated). Once we have the
+			barycentric coordinates for the triangle, we can tell if the intersection is in the triangle by checking if any of the barycentric coordinates are less than
+			zero. 
+		</p>
+		<p>
+			For spheres, the same goal of solving for t, b1, and b2 is relevant. In this instace, though, no special algorithm is necessary -- 
+			simply solving a quadradic equation using the quadratic formula	will suffice. The surface normal can then be calculated as we know the
+			center of the sphere's position, and the knowledge that the normal is the direction connecting the center to the ray's contact point.
+		</p>
+		<p>
+			Let's look at some simple images rendered using this pipeline.
+		</p>
+		<p>
+			First is this basic scene with spheres.
+		</p>
+		<img src="CBspheres.png"/>
+		<p>
+			Next is this teapot.
+		</p>
+		<img src="teapot.png"/>
+		<p>
+			This cow can also be rendered by the pipeline.
+		</p>
+		<img src="cow.png"/>
+		<p>
+			Lastly, this car frame can just barely be rendered by the pipeline, taking nearly a minute on my machine even with the acceleration from Moller-Trumbore. For more complex models,
+			we'll need to leverage BVH.
+		</p>
+		<img src="beetle.png"/>
 </html>
