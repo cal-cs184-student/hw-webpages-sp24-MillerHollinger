@@ -64,4 +64,34 @@
 			we'll need to leverage BVH.
 		</p>
 		<img src="./beetle.png"/>
+		<h2>Part 2</h2>
+		<p>
+			My BVH algorithm recursively divides a scene into areas to prevent the need to check each ray against every primitive. Instead, primitives are sorted into bounding boxes based
+			on their positions in the scene, and only those primitives that the ray passes through are checked for intersection. By sorting these boxes into a tree structure, rendering time 
+			is reduced from O(P) to O(log P).
+		</p>
+		<p>
+			For my implementation, I split each bounding box at the average position of the primitives contained within it. I chose average over centroid because with the centroid method,
+			a single large triangle can cause the child bounding boxes to be very imbalanced. With average, a single object only has one centroid, so the split will occur more evenly.
+			BVH fails when bounding boxes are very imbalanced so this seemed like an important case to avoid.
+		</p>
+		<p>
+			Let's look at some images only practically possible with the power of BVH.
+		</p>
+		<p>
+			This model of Planck containing thousands of triangles is only practically possible with BVH. It rendered in a tenth of a second.
+		</p>
+		<img src="./maxplanck.png"/>
+		<p>
+			As is this statue with tens of thousands of triangles. Notice how this image can cause the "teapot in a stadium" effect by having a very complex object surrounded by
+			simple geometry. On my machine, it took 0.2 seconds to render with BVH acceleration.
+		</p>
+		<img src="./CBlucy.png"/>
+		<p>
+			Comparing non-BVH to BVH shows the incredible speed-up offered by the system. The teapot goes from taking 30 seconds to 0.1 seconds. The cow goes from 40 to 0.1 as well, as does the beetle
+			go from 45 to 0.1. The Max Planck and Lucy images take over two minutes to render with no BVH, barely making it even 10% of the way in that time. With BVH, however, each is done in 0.3 seconds
+			or less every time.
+			Looking into the breakdown, for those two models, it actually takes more time to build the BVH than it does to actually render the image -- building the BVH takes 0.15 seconds while rendering takes 0.1.
+			Clearly, the speedup offered by BVH is incredible.
+		</p>
 </html>
