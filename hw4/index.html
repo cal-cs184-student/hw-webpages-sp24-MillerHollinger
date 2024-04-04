@@ -29,5 +29,41 @@
 			And in this picture, I turned off everything but the shearing constraints.
 		</p>
 		<img src="./only_shear.png"/>
+		<h2>Part 2</h2>
+		<p>
+			In Part 2, I implemented physical simulation for the cloth, tweaking a variety of parameters to see the effect they had on the simulation.
+		</p>
+		<p>
+			To begin, here is the resting state of the cloth.
+		</p>
+		<img src="./default.png"/>
+		<p>
+			Turning down the spring constant ks to 100 causes the resting state to be much flatter but wavier at the top. Additionally, the bottom of the cloth is somewhat "bowed out."
+		</p>
+		<img src="./ks_100.png"/>
+		<p>
+			Turning it up to 25000 instead causes the opposite effect, with the top of the cloth having a single large bump and the rest of the cloth being practically perfectly square.
+		</p>
+		<img src="./ks_25000.png"/>
+		<p>
+			Moving to density, increasing it to 1000 g/cm^2 amplifies the ripple effect at the top of the cloth. It also intensifies the bowing shape at the top. Additionally, during the simulation, the bottom edge of the cloth barely swung, instead coming to a resting state quickly.
+		</p>
+		<img src="./density_1000.png"/>
+		<p>
+			On the other hand, lower density barely has a bowed shape at the top at all.
+		</p>
+		<img src="./density_25000.png"/>
+		<p>
+			The effect of reducing damping is that the cloth takes a very long time to stop moving, swinging back and forth and folding in on itself repeatedly. Additionally, the surface is much more bumpy.
+		</p>
+		<img src="./damping_low.png"/>
+		<p>
+			Increasing damping causes the cloth to fall very slowly, and once it reaches its final position, it does not undulate much. Notably, the final position here is the same as with standard damping.
+		</p>
+		<img src="./damping_high.png"/>
+		<p>
+			Finally, here is a picture of the cloth simulation when all four corners are pinned instead of just two corners.
+		</p>
+		<img src="./corners.png"/>
 			
 </html>
