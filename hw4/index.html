@@ -85,5 +85,45 @@
 			I also implemented collision with a plane. Here's the cloth resting on the plane after falling down.
 		</p>
 		<img src="./rest.png"/>
+		<h2>Part 4</h2>
+		<p>
+			In Part 4, I implemented cloth self-collision by measuring the distance between points and pushing apart points that get too close.
+		</p>
+		<p>
+			When the cloth begins to fall, we immediately notice a sort of "wavy crumpling" at the bottom that continues as it falls.
+		</p>
+		<img src="./fall1.png"/>
+		<p>
+			These waves grow more intense as the fall continues until it has the appearance of layered icing.
+		</p>
+		<img src="./fall2.png"/>
+		<p>
+			Once the cloth descends, it stays stacked in waves, though it slowly pulls itself flat.
+		</p>
+		<img src="./fall3.png"/>
+		<p>
+			The top layer falls over, which drags the next layer...
+		</p>
+		<img src="./fall4.png"/>
+		<p>
+			And then that layer drags down the next, until it lays mostly flat on the plane.
+		</p>
+		<img src="./fall5.png"/>
+		<p>
+			Repeating the experiment with higher density, we see it crumples into a wad instead of falling into smooth layers.
+		</p>
+		<img src="./hi_dens.png"/>
+		<p>
+			Lower density instead intensifies the waviness.
+		</p>
+		<img src="./low_dens.png"/>
+		<p>
+			Raising the spring constant causes crumpling similar to the effect of high density.
+		</p>
+		<img src="./high_ks.png"/>
+		<p>
+			Lowering it causes more waves similar to as was shown with lower density.
+		</p>
+		<img src="./low_ks.png"/>
 			
 </html>
