@@ -9,6 +9,13 @@
 	<body>
 		<h1>Homework 4 @ <a href="https://cal-cs184-student.github.io/hw-webpages-sp24-MillerHollinger/hw4/index.html">https://cal-cs184-student.github.io/hw-webpages-sp24-MillerHollinger/hw4/index.html</a></h1>
 		<i>Grader's Note: All parts 1 to 5 completed. No extra credit attempted.</i>
+		<h2>Overview</h2>
+		<p>
+			This homework begins by exploring cloth physics based on spring contraints. After creating the cloth, we write code to simulate the effects of the internal springs. Then, 
+			we implement collisions -- first with primitives in a scene and then between parts of the cloth and itself using the distance between vertices. Finally, we write a variety
+			of shaders using GLSL to change the appearance of the cloth and the sphere it falls onto. Altogether, this homework is a walkthrough of various critical parts of the physics
+			and graphics pipelines used in rendering software.
+		</p>
 		<h2>Part 1</h2>
 		<p>
 			For Part 1, I implemented a system to generate a grid of point masses and spring contraints to form the basis for our cloth simulation.
@@ -130,11 +137,11 @@
 			In Part 5, I implemented a variety of shaders to use on the sphere and cloth.
 		</p>
 		<p>
-			A shader program is, at its most basic, a method for altering the appearance of geometry using math. Using various input values, such as the position of the lights in the scene,
-			camera, object normal, et cetera, it allows for a variety of approaches towards object shading. Vertex shading allows for geometrical changes to occur to vertices and their properties (e.g. normal)
+			In order to run efficiently on a GPU, we need to write special code that is parallelizable. Shader programs fulfill this need. Each programs takes in various input values, such as the position of the lights in the scene,
+			the camera's position, and object normals. We then apply these inputs to write vertex and fragment programs. Vertex shading allows for geometrical changes to occur to vertices and their properties (e.g. vertex normals)
 			before they are rendered, while fragments shaders take in data about the scene to calculate the final color of what appears on the screen. The two work together to create all sorts of effects -- by giving
-			us control over where vertices appear, we can change the apparent shape of an object without needing to actually change its geometry at runtime. Then, by being able to control the object's
-			color mathematically, we can apply all sorts of lighting and visual effects based on the object's placement in the scene and other paramets that can be altered at runtime.
+			us control over where vertices appear, we can change the apparent shape of an object without needing to actually change its geometry at runtime. Then, in the fragment shader, we can apply all sorts of lighting and visual effects 
+			based on the object's parameters after vertex shading has finished.
 		</p>
 		<p>
 			Blinn-Phong shading is a shading method that sums three different kinds of simpler shading to create a more complex result. First, we add a flat "ambient shading" value that ensures no parts
